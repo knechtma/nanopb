@@ -1,0 +1,51 @@
+// See README.md for information and build instructions.
+//
+// Note: START and END tags are used in comments to define sections used in
+// tutorials.  They are not part of the syntax for Protocol Buffers.
+//
+// To get an in-depth walkthrough of this file and the related examples, see:
+// https://developers.google.com/protocol-buffers/docs/tutorials
+
+// [START declaration]
+syntax = "proto3";
+package faive; // does not effect generated code
+// [END declaration]
+
+// [START messages]
+
+message Sensor {
+  string name = 1;
+  int32 id = 2; // e.g. 1: MCP, 2: PIP, 3: DIP
+
+  enum SensorType {
+    HES = 0;
+    IMU = 1;
+    FSR = 2;
+  }
+
+  SensorType type = 3;
+
+  message SensorData {
+    int32 axis = 1; // e.g. 1: x, 2: y, 3: z
+    double value = 2;
+  }
+
+  repeated SensorData data = 4;
+
+}
+
+message Finger {
+  string name = 1;
+  int32 id = 2; // 1: thumb, 2: index, 3: middle, 4: ring, 5: pinky
+  repeated Sensor sensors = 3;
+}
+
+message Hand {
+  repeated Finger fingers = 1;
+}
+
+// [END messages]
+
+
+
+
