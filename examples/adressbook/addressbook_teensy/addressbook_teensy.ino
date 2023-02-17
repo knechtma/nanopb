@@ -30,6 +30,7 @@ void setup() {
   for(int i = 0; i<stream.bytes_written; i++){
     Serial.printf("%02X",buffer[i]);
   }
+  Serial.println();
 
   // Serial.print("Person name: ");
   // Serial.println(person.name);

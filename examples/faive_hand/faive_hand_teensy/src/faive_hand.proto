@@ -9,6 +9,8 @@
 // [START declaration]
 syntax = "proto3";
 package faive; // does not effect generated code
+
+import "nanopb.proto";
 // [END declaration]
 
 // [START messages]
@@ -18,9 +20,10 @@ message Sensor {
   int32 id = 2; // e.g. 1: MCP, 2: PIP, 3: DIP
 
   enum SensorType {
-    HES = 0;
-    IMU = 1;
-    FSR = 2;
+    NONE = 0;
+    HES = 1;
+    IMU = 2;
+    FSR = 3;
   }
 
   SensorType type = 3;
@@ -37,11 +40,11 @@ message Sensor {
 message Finger {
   string name = 1;
   int32 id = 2; // 1: thumb, 2: index, 3: middle, 4: ring, 5: pinky
-  repeated Sensor sensors = 3;
+  repeated Sensor sensors = 3 [(nanopb).max_count = 9, (nanopb).fixed_count = true];
 }
 
 message Hand {
-  repeated Finger fingers = 1;
+  repeated Finger fingers = 1 [(nanopb).max_count = 5, (nanopb).fixed_count = true];
 }
 
 // [END messages]
