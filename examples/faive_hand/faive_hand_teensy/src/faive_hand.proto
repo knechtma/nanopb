@@ -17,29 +17,66 @@ import "nanopb.proto";
 
 message Sensor {
   string name = 1;
-  int32 id = 2; // e.g. 1: MCP, 2: PIP, 3: DIP
+
+  enum JointType {
+    NOJNT = 0;
+    MCP = 1;
+    PIP = 2;
+    DIP = 3;
+    CMC = 4;
+  }
+
+  JointType joint = 2;
+
+  enum DigitType {
+    NODIG = 0;
+    PP = 1;
+    MP = 2;
+    DP = 3;
+  }
+
+  DigitType digit = 3;
 
   enum SensorType {
-    NONE = 0;
+    NOSEN = 0;
     HES = 1;
     IMU = 2;
     FSR = 3;
   }
 
-  SensorType type = 3;
+  SensorType type = 4;
 
   message SensorData {
-    int32 axis = 1; // e.g. 1: x, 2: y, 3: z
+    enum AxisType {
+      NOAXI = 0;
+      X = 1;
+      Y = 2;
+      Z = 3;
+    }
+
+    AxisType axis = 1;
     double value = 2;
   }
 
-  repeated SensorData data = 4;
+  repeated SensorData data = 5 [(nanopb).max_count = 3, (nanopb).fixed_count = true];
 
 }
 
 message Finger {
-  string name = 1;
-  int32 id = 2; // 1: thumb, 2: index, 3: middle, 4: ring, 5: pinky
+
+  enum FingerType {
+    NOFIN = 0;
+    THUMB = 1;
+    INDEX = 2;
+    MIDDLE = 3;
+    RING = 4;
+    PINKY = 5;
+  }
+
+  FingerType type = 1;
+
+  string name = 2;
+
   repeated Sensor sensors = 3 [(nanopb).max_count = 9, (nanopb).fixed_count = true];
 }
 

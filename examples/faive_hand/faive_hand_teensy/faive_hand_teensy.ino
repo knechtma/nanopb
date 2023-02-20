@@ -25,47 +25,50 @@ void setup() {
 
   // hand.fingers[0] = thumb;
 
-  const char* THUMB_NAME_STR = "thumb";
+  // const char* THUMB_NAME_STR = "thumb";
   faive_Finger& thumb = hand.fingers[0];
   thumb = faive_Finger_init_default;
-  thumb.id = 1;
-  thumb.name.arg = THUMB_NAME_STR;
-  thumb.name.funcs.encode = &encode_string;
+  thumb.type = faive_Finger_FingerType_THUMB;
+  // thumb.name.arg = THUMB_NAME_STR;
+  // thumb.name.funcs.encode = &encode_string;
 
   faive_Finger& index_finger = hand.fingers[1];
   index_finger = faive_Finger_init_default;
-  index_finger.id = 2;
-  index_finger.name.arg = "index";
-  index_finger.name.funcs.encode = &encode_string;
+  index_finger.type = faive_Finger_FingerType_INDEX;
+  // index_finger.name.arg = "index";
+  // index_finger.name.funcs.encode = &encode_string;
 
   faive_Finger& middle_finger = hand.fingers[2];
   middle_finger = faive_Finger_init_default;
-  middle_finger.id = 3;
+  middle_finger.type = faive_Finger_FingerType_MIDDLE;
 
   faive_Finger& ring_finger = hand.fingers[3];
   ring_finger = faive_Finger_init_default;
-  ring_finger.id = 4;
+  ring_finger.type = faive_Finger_FingerType_RING;
 
   faive_Finger& pinky_finger = hand.fingers[4];
   pinky_finger = faive_Finger_init_default;
-  pinky_finger.id = 5;
+  pinky_finger.type = faive_Finger_FingerType_PINKY;
 
   faive_Sensor& thumb_HE1 = thumb.sensors[0];
   thumb_HE1 = faive_Sensor_init_default;
-  thumb_HE1.id = 2;
+  thumb_HE1.joint = faive_Sensor_JointType_CMC;
   thumb_HE1.type = faive_Sensor_SensorType_HES;
 
-  faive_Sensor_SensorData thumb_HE1_X = faive_Sensor_SensorData_init_default;
-  thumb_HE1_X.axis = 1;
+  faive_Sensor_SensorData& thumb_HE1_X = thumb_HE1.data[0];
+  thumb_HE1_X = faive_Sensor_SensorData_init_default;
+  thumb_HE1_X.axis = faive_Sensor_SensorData_AxisType_X;
   thumb_HE1_X.value = 12.34;
 
-  faive_Sensor thumb_FSR = faive_Sensor_init_default;
-  thumb_FSR.id = 3;
+  faive_Sensor& thumb_FSR = thumb.sensors[4];
+  thumb_FSR = faive_Sensor_init_default;
+  thumb_FSR.digit = faive_Sensor_DigitType_DP;
   thumb_FSR.type = faive_Sensor_SensorType_FSR;
   
-  faive_Sensor_SensorData thumb_FSR_X = faive_Sensor_SensorData_init_default;
-  thumb_FSR_X.axis = 1;
-  thumb_FSR_X.value = 543.21;
+  faive_Sensor_SensorData& thumb_FSR_N = thumb_FSR.data[0];
+  thumb_FSR_N = faive_Sensor_SensorData_init_default;
+  thumb_FSR_N.axis = faive_Sensor_SensorData_AxisType_NOAXI;
+  thumb_FSR_N.value = 543.21;
 
   bool status = pb_encode(&stream, faive_Hand_fields, &hand);
 
@@ -75,55 +78,22 @@ void setup() {
     return;
   }
 
-  Serial.print("Message: ");
+  // Serial.print("Message: ");
 
   for(int i = 0; i<stream.bytes_written; i++){
     Serial.printf("%02X ",buffer[i]);
   }
   Serial.println();
 
-  // Serial.print("Person name: ");
-  // Serial.println(person.name);
-  // Serial.print("Senstype: ");
-  // Serial.println(thumb_HE1.type);
-
-
-
-  // tutorial_AddressBook address_book = tutorial_AddressBook_init_default;
-  // tutorial_Person person = tutorial_Person_init_default;
-  // // person.name = "John Doe";
-  // person.id = 1234;
-
-  // uint8_t buffer[128];
-  // pb_ostream_t stream = pb_ostream_from_buffer(buffer, sizeof(buffer)); // what does this do?
-
-  // person.id = 1234;
-
-  // bool status = pb_encode(&stream, tutorial_Person_fields, &person);
-
-  // if (!status) {
-  //   Serial.print("Encoding failed: ");
-  //   Serial.println(PB_GET_ERROR(&stream));
-  //   return;
-  // }
-
-  // Serial.print("Message: ");
-
-  // for(int i = 0; i<stream.bytes_written; i++){
-  //   Serial.printf("%02X",buffer[i]);
-  // }
-
-  // // Serial.print("Person name: ");
-  // // Serial.println(person.name);
-  // Serial.print("Person id: ");
-  // Serial.println(person.id);
-
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  // Serial.print("Person name: ");
-  // Serial.println(address_book.person.name);
-  // Serial.print("Person id: ");
-  // Serial.println(address_book.person.id);
+  for(int i = 0; i<stream.bytes_written; i++){
+    Serial.printf("%02X ",buffer[i]);
+  }
+  Serial.println();
+  delay(500);
+
+  
 }
