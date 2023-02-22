@@ -14,12 +14,14 @@ bool encode_string(pb_ostream_t* stream, const pb_field_t* field, void* const* a
     return pb_encode_string(stream, (uint8_t*)str, strlen(str));
 }
 
+
+uint8_t buffer[1024] = {'\0'};
+pb_ostream_t stream = pb_ostream_from_buffer(buffer, sizeof(buffer)); // what does this do?
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
 
-  uint8_t buffer[1024] = {'\0'};
-  pb_ostream_t stream = pb_ostream_from_buffer(buffer, sizeof(buffer)); // what does this do?
   stream.bytes_written = 0;
   faive_Hand hand = faive_Hand_init_default;
 
@@ -81,7 +83,7 @@ void setup() {
   // Serial.print("Message: ");
 
   for(int i = 0; i<stream.bytes_written; i++){
-    Serial.printf("%02X ",buffer[i]);
+    Serial.printf("%02X",buffer[i]);
   }
   Serial.println();
 
@@ -90,7 +92,7 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   for(int i = 0; i<stream.bytes_written; i++){
-    Serial.printf("%02X ",buffer[i]);
+    Serial.printf("%02X",buffer[i]);
   }
   Serial.println();
   delay(500);
