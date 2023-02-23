@@ -83,6 +83,7 @@ message Event {
     NOEVT = 0;
     HANDDATA = 1;
     FINGERDATA = 2;
+    SETMOTORSPEED = 3;
   }
   EventType type = 1;
 
@@ -94,6 +95,7 @@ message Event {
 
   Hand handdata = 3;
   Finger fingerdata = 4;
+  MotorSpeeds motorspeeds = 5;
 }
 
 // [END messages]
