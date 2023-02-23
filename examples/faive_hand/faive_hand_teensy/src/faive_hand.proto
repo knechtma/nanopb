@@ -25,7 +25,6 @@ message Sensor {
     DIP = 3;
     CMC = 4;
   }
-
   JointType joint = 2;
 
   enum DigitType {
@@ -34,7 +33,6 @@ message Sensor {
     MP = 2;
     DP = 3;
   }
-
   DigitType digit = 3;
 
   enum SensorType {
@@ -43,7 +41,6 @@ message Sensor {
     IMU = 2;
     FSR = 3;
   }
-
   SensorType type = 4;
 
   message SensorData {
@@ -53,13 +50,10 @@ message Sensor {
       Y = 2;
       Z = 3;
     }
-
     AxisType axis = 1;
     double value = 2;
   }
-
   repeated SensorData data = 5 [(nanopb).max_count = 3, (nanopb).fixed_count = true];
-
 }
 
 message Finger {
@@ -82,6 +76,24 @@ message Finger {
 
 message Hand {
   repeated Finger fingers = 1 [(nanopb).max_count = 5, (nanopb).fixed_count = true];
+}
+
+message Event {
+  enum EventType {
+    NOEVT = 0;
+    HANDDATA = 1;
+    FINGERDATA = 2;
+  }
+  EventType type = 1;
+
+  message EventMetaData {
+    int32 id = 1;
+    double value = 2;
+  }
+  EventMetaData metadata = 2;
+
+  Hand handdata = 3;
+  Finger fingerdata = 4;
 }
 
 // [END messages]

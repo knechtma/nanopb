@@ -23,7 +23,18 @@ void setup() {
   Serial.begin(9600);
 
   stream.bytes_written = 0;
-  faive_Hand hand = faive_Hand_init_default;
+
+  faive_Event Handdata = faive_Event_init_default;
+  Handdata.type = faive_Event_EventType_HANDDATA;
+
+  faive_Event Fingerdata = faive_Event_init_default;
+  Fingerdata.type = faive_Event_EventType_FINGERDATA;
+
+  Handdata.has_handdata = true;
+  faive_Hand& hand = Handdata.handdata;
+  hand = faive_Hand_init_default;
+
+  Fingerdata.has_fingerdata = true;
 
   // hand.fingers[0] = thumb;
 
@@ -72,7 +83,12 @@ void setup() {
   thumb_FSR_N.axis = faive_Sensor_SensorData_AxisType_NOAXI;
   thumb_FSR_N.value = 543.21;
 
-  bool status = pb_encode(&stream, faive_Hand_fields, &hand);
+  // bool status = pb_encode(&stream, faive_Event_fields, &Handdata);
+
+  faive_Finger& thumb2 = Fingerdata.fingerdata;
+  thumb2 = thumb;
+
+  bool status = pb_encode(&stream, faive_Event_fields, &Fingerdata);
 
   if (!status) {
     Serial.print("Encoding failed: ");
