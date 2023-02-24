@@ -78,12 +78,28 @@ message Hand {
   repeated Finger fingers = 1 [(nanopb).max_count = 5, (nanopb).fixed_count = true];
 }
 
+message Motor {
+  int32 id = 1;
+  int32 mode = 2;
+  double speed = 3;
+  double position = 4;
+  double current = 5;
+}
+
+message MotorBoard {
+  repeated Motor motors = 1 [(nanopb).max_count = 16, (nanopb).fixed_count = true];
+}
+
 message Event {
   enum EventType {
     NOEVT = 0;
     HANDDATA = 1;
     FINGERDATA = 2;
-    SETMOTORSPEED = 3;
+    SETMOTMODE = 3;
+    SETMOTSPEED = 4;
+    SETMOTPOS = 5;
+    SETMOTCURR = 6;
+    MOTORDATA = 7;
   }
   EventType type = 1;
 
@@ -95,7 +111,7 @@ message Event {
 
   Hand handdata = 3;
   Finger fingerdata = 4;
-  MotorSpeeds motorspeeds = 5;
+  MotorBoard motordata = 5;
 }
 
 // [END messages]
