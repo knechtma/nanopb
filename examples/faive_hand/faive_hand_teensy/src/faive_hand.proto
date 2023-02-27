@@ -79,11 +79,22 @@ message Hand {
 }
 
 message Motor {
-  int32 id = 1;
-  int32 mode = 2;
-  double speed = 3;
-  double position = 4;
-  double current = 5;
+  int32 motorid = 1;
+  int32 driverid = 2;
+  int32 CS_pin = 3;
+  int32 Output = 4;
+
+  enum MotorMode {
+    OFF = 0;
+    FORWARD = 1;
+    REVERSE = 2;
+    BREAK = 3;
+  }
+
+  MotorMode mode = 5;
+  double speed = 6;
+  double position = 7;
+  double current = 8;
 }
 
 message MotorBoard {
