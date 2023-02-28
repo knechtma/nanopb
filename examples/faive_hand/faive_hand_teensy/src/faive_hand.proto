@@ -101,6 +101,11 @@ message MotorBoard {
   repeated Motor motors = 1 [(nanopb).max_count = 16, (nanopb).fixed_count = true];
 }
 
+message EventMetaData {
+  int32 id = 1;
+  double value = 2;
+}
+
 message Event {
   enum EventType {
     NOEVT = 0;
@@ -111,15 +116,10 @@ message Event {
     SETMOTPOS = 5;
     SETMOTCURR = 6;
     MOTORDATA = 7;
+    INITMOT = 8;
   }
   EventType type = 1;
-
-  message EventMetaData {
-    int32 id = 1;
-    double value = 2;
-  }
   EventMetaData metadata = 2;
-
   Hand handdata = 3;
   Finger fingerdata = 4;
   MotorBoard motordata = 5;
