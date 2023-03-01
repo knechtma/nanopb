@@ -95,6 +95,8 @@ message Motor {
   double speed = 6;
   double position = 7;
   double current = 8;
+  int32 enc1_pin = 9;
+  int32 enc2_pin = 10;
 }
 
 message MotorBoard {
@@ -117,6 +119,7 @@ message Event {
     SETMOTCURR = 6;
     MOTORDATA = 7;
     INITMOT = 8;
+    SETCTRLMODE = 9;
   }
   EventType type = 1;
   EventMetaData metadata = 2;
