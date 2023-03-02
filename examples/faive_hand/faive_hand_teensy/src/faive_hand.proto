@@ -95,8 +95,8 @@ message Motor {
   double speed = 6;
   double position = 7;
   double current = 8;
-  int32 enc1_pin = 9;
-  int32 enc2_pin = 10;
+  bool initialized = 9;
+  int32 encCount = 10;
 }
 
 message MotorBoard {
